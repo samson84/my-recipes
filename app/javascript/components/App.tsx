@@ -1,39 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useRecipeSearch } from "../useRecipeSearch";
+import Result from "./Result";
 
 const App = () => {
   const [searchValue, setSearchValue] = useState("");
-  const [query, setQuery] = useState<string>("");
-  const [result, setResult] = useState<any | null>(null);
-  const [error, setError] = useState<any | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const task = async () => {
-      setError(null);
-      setLoading(false);
-      try {
-        const response = await fetch(`/recipes/search?query=${query}`);
-        const data = await response.json();
-        setResult(data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (query !== "") {
-      task();
-    }
-  }, [query]);
+  const { result, error, loading, search } = useRecipeSearch();
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) =>
     setSearchValue(event.currentTarget.value);
 
   const handleSubmit = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    setQuery(searchValue);
+    search(searchValue);
     setSearchValue("");
   };
+
+  const disabled = searchValue === "" || loading;
 
   return (
     <>
@@ -44,13 +26,13 @@ const App = () => {
           onChange={handleChange}
           placeholder="ingredients split by comma"
         />
-        <button type="submit" disabled={searchValue === ""}>
+        <button type="submit" disabled={disabled}>
           Search For Reciepes
         </button>
       </form>
-      <pre>{loading ? "loading" : ""}</pre>
-      <pre>{error?.message}</pre>
-      <pre>{JSON.stringify(result, null, 2)}</pre>
+      {loading && <div>Loading...</div>}
+      {error && <div>Something went wrong :(</div>}
+      {result && <Result results={result} />}
     </>
   );
 };
