@@ -15,15 +15,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_29_232626) do
   enable_extension "plpgsql"
 
   create_table "ingredients", force: :cascade do |t|
-    t.string "name"
+    t.string "description"
   end
 
   create_table "ingredients_recipes", id: false, force: :cascade do |t|
     t.bigint "recipe_id", null: false
     t.bigint "ingredient_id", null: false
-    t.string "unit"
-    t.string "amount"
-    t.string "comment"
     t.index ["ingredient_id"], name: "index_ingredients_recipes_on_ingredient_id"
     t.index ["recipe_id"], name: "index_ingredients_recipes_on_recipe_id"
   end
