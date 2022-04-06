@@ -1,7 +1,6 @@
 class RecipesController < ApplicationController
   def search
-    respond_to :json
-    render :json, {:result => 'it works'}
+    ingredient_list = params.require(:query).split(',')
+    @search_result = Recipe.search_by(ingredient_list)
   end
-
 end

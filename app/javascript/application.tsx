@@ -1,9 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-
-const App = () => {
-  return <div>Hello, Rails 7!</div>;
-};
+import App from "./components/App";
 
 const rootEl = document.getElementById("app");
 ReactDOM.render(<App />, rootEl);
