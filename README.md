@@ -10,6 +10,17 @@ Install the javascript dependencies:
 
 `npm ci`
 
+Have a locally running postgres database:
+
+`docker compose up -d`
+
+Create and seed the database (it takes some time):
+
+`bin/rails db:create db:migrate db:seed`
+
+Copy `example.env` to `.env` and fill in the database
+connection info.  
+
 Run the dev server
 
 `./bin/dev`
@@ -37,9 +48,10 @@ Run the dev server
 ## Worklog
 
 - Initialize a new rails application, connects postgres, set up dev env, 1.5 h
-- Trying to figure out how to parse the ingredients of the receipes. It is really complicated and not future proof, so I changed to a full text search concept, which has a pretty good support in Postgres. Create a seeder. 4h
+- Trying to figure out how to parse the ingredients of the receipes. It is really complicated and not future proof, so I changed to a full text search concept, which has a pretty good support in Postgres. Create a seeder. 4 h
 - Implementing the search SQL and the free text search in ingredients,
   add a React SPA, 4h
+- Create a little bit nicer frontend. 0.5 h
 
 ## Improvement Ideas
 
